@@ -1,5 +1,3 @@
-// middlewares/authMiddleware.js
-
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 
@@ -7,10 +5,11 @@ import User from '../models/User.js';
 export const protect = async (req, res, next) => {
   let token;
 
-  if (req.cookies.token) { // Check if token is available in cookies
+  // Check for token in Authorization header
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
     try {
-      // Get token from cookies
-      token = req.cookies.token;
+      // Get token from header
+      token = req.headers.authorization.split(' ')[1];
 
       // Verify token
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -26,4 +25,6 @@ export const protect = async (req, res, next) => {
   } else {
     res.status(401).json({ message: 'Not authorized, no token' });
   }
+
+  
 };

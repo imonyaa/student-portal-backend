@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import connectDB from './config/db.js';
 import authRoutes from './routes/auth.js';
 import courseRoutes from './routes/course.js';
+import cors from 'cors';
 
 // Load environment variables
 dotenv.config();
@@ -17,6 +18,7 @@ const app = express();
 // Middleware
 app.use(express.json()); // For parsing JSON request bodies
 app.use(cookieParser()); // For parsing cookies
+app.use(cors()); 
 
 // Routes
 app.get('/', (req, res) => {

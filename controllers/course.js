@@ -133,7 +133,9 @@ export const uploadFile = async (req, res) => {
       if (req.user.role !== 'teacher') {
         return res.status(403).json({ message: 'Access denied' });
       }
-  
+      // Print user token and role
+      console.log('User Token:', req.user.token);
+      console.log('User Role:', req.user.role);
       const course = await Course.findById(req.params.id);
   
       if (!course) {

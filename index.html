@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File Upload Test</title>
+</head>
+<body>
+  <h1>Upload File</h1>
+  <form id="uploadForm" action="http://localhost:3000/api/courses/669fd2b667e45afaa77c209f/upload" method="POST" enctype="multipart/form-data">
+    <label for="file">Select file:</label>
+    <input type="file" id="file" name="file" accept=".pdf, .mp4, .avi, .mov" required>
+    <br><br>
+    <label for="description">File Description:</label>
+    <input type="text" id="description" name="description" required>
+    <br><br>
+    <input type="submit" value="Upload File">
+  </form>
+
+  <script>
+    document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+      e.preventDefault(); // Prevent the default form submission
+
+      const formData = new FormData(e.target);
+      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2OWZkMWQzN2JjMWVhMjlkNzliMTEwOCIsImlhdCI6MTcyMTc0OTk4MCwiZXhwIjoxNzI0MzQxOTgwfQ.GkaBkre0AN5m3KYewAZF3xrG1wUaxYUZmLnxfgqDBnA'; // Provided JWT token
+
+      try {
+        const response = await fetch(e.target.action, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          },
+          body: formData
+        });
+
+        const result = await response.json();
+        if (response.ok) {
+          alert('File uploaded successfully: ' + JSON.stringify(result));
+        } else {
+          alert('Error: ' + result.message);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred while uploading the file');
+      }
+    });
+  </script>
+</body>
+</html>
