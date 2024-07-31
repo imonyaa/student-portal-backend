@@ -6,8 +6,8 @@ import upload from '../middleware/uploadMiddleware.js';
 const router = express.Router();
 
 // Course routes
-router.route('/').post(protect, createCourse).get(getCourses);
-router.route('/:id').get(getCourse).put(protect, updateCourse).delete(protect, deleteCourse);
+router.route('/').post(protect, createCourse).get(protect, getCourses);
+router.route('/:id').get(protect,getCourse).put(protect, updateCourse).delete(protect, deleteCourse);
 router.route('/:id/upload').post(protect, upload.single('file'), uploadFile);
 
 export default router;

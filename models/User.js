@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-import bcrypt from 'bcryptjs';
+import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
 
 const UserSchema = new mongoose.Schema({
   firstName: {
@@ -24,14 +24,40 @@ const UserSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['student', 'teacher'],
+    enum: ["student", "teacher"],
     required: true,
+  },
+  academicLevel: {
+    type: String,
+    enum: ["bachelor", "master"],
+    required: function () {
+      return this.role === "student";
+    },
+  },
+  academicYear: {
+    type: Number,
+    required: function () {
+      return this.role === "student";
+    },
+  },
+  major: {
+    type: String,
+    enum: ["control", "computer", "power", "telecom"],
+    required: function () {
+      return this.role === "student" && this.academicLevel === "master";
+    },
+  },
+  group: {
+    type: Number,
+    required: function () {
+      return this.role === "student";
+    },
   },
 });
 
 // Password hashing
-UserSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) {
+UserSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) {
     return next();
   }
 
@@ -45,6 +71,6 @@ UserSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
-const User = mongoose.model('User', UserSchema);
+const User = mongoose.model("User", UserSchema);
 
 export default User;

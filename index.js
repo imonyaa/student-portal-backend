@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import connectDB from './config/db.js';
 import authRoutes from './routes/auth.js';
 import courseRoutes from './routes/course.js';
+import usersRoutes from './routes/user.js';
 import cors from 'cors';
 
 // Load environment variables
@@ -26,6 +27,7 @@ app.get('/', (req, res) => {
 });
 app.use('/api/auth', authRoutes);
 app.use('/api/courses', courseRoutes);
+app.use('/api/users', usersRoutes);
 
 // Define port
 const PORT = process.env.PORT || 5000;

@@ -12,7 +12,7 @@ const generateToken = (id) => {
 // @route   POST /api/auth/register
 // @access  Public
 export const register = async (req, res) => {
-  const { firstName, lastName, email, password, phoneNumber, role } = req.body;
+  const { firstName, lastName, email, password, phoneNumber, role, academicLevel, academicYear, major, group } = req.body;
 
   try {
     // Check if user already exists
@@ -30,6 +30,10 @@ export const register = async (req, res) => {
       password,
       phoneNumber,
       role,
+      academicLevel,
+      academicYear,
+      major,
+      group,
     });
 
     if (user) {
@@ -50,7 +54,10 @@ export const register = async (req, res) => {
         email: user.email,
         phoneNumber: user.phoneNumber,
         role: user.role,
-        // Return token in response only if needed for other purposes
+        academicLevel: user.academicLevel,
+        academicYear: user.academicYear,
+        major: user.major,
+        group: user.group,
         token,
       });
     } else {
@@ -89,6 +96,10 @@ export const login = async (req, res) => {
         email: user.email,
         phoneNumber: user.phoneNumber,
         role: user.role,
+        academicLevel: user.academicLevel,
+        academicYear: user.academicYear,
+        major: user.major,
+        group: user.group,
         // Return token in response only if needed for other purposes
         token,
       });

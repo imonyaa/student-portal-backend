@@ -6,7 +6,7 @@ import User from '../models/User.js';
 // @route   POST /api/courses
 // @access  Private (Teacher)
 export const createCourse = async (req, res) => {
-  const { title, description, materials } = req.body;
+  const { title, description, materials, academicLevel, academicYear, major } = req.body;
 
   try {
     // Check if the user is a teacher
@@ -19,6 +19,9 @@ export const createCourse = async (req, res) => {
       title,
       description,
       teacher: req.user._id,
+      academicLevel,
+      academicYear,
+      major,
       materials,
     });
 
@@ -34,13 +37,21 @@ export const createCourse = async (req, res) => {
 // @access  Public
 export const getCourses = async (req, res) => {
   try {
-    const courses = await Course.find().populate('teacher', 'firstName lastName');
-    res.json(courses);
+    if (req.user && req.user.role === 'student') {
+      const courses = await Course.find({ academicLevel: req.user.academicLevel, academicYear: req.user.academicYear, major: req.user.major });
+      return res.json(courses);
+    } else {
+      const courses = await Course.find().populate('teacher', 'firstName lastName');
+      return res.json(courses);
+    }
+    // const courses = await Course.find().populate('teacher', 'firstName lastName');
+    // res.json(courses);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
   }
 };
+
 
 // @desc    Get a single course
 // @route   GET /api/courses/:id
@@ -64,8 +75,7 @@ export const getCourse = async (req, res) => {
 // @route   PUT /api/courses/:id
 // @access  Private (Teacher)
 export const updateCourse = async (req, res) => {
-  const { title, description, materials } = req.body;
-
+  const { title, description, materials, academicLevel, academicYear, major } = req.body;
   try {
     // Check if the user is a teacher
     if (req.user.role !== 'teacher') {
@@ -86,6 +96,9 @@ export const updateCourse = async (req, res) => {
     course.title = title || course.title;
     course.description = description || course.description;
     course.materials = materials || course.materials;
+    course.academicLevel = academicLevel || course.academicLevel;
+    course.academicYear = academicYear || course.academicYear;
+    course.major = major || course.major;
 
     const updatedCourse = await course.save();
     res.json(updatedCourse);
@@ -115,8 +128,7 @@ export const deleteCourse = async (req, res) => {
     if (course.teacher.toString() !== req.user._id.toString()) {
       return res.status(403).json({ message: 'Access denied' });
     }
-
-    await course.remove();
+    await course.deleteOne();
     res.json({ message: 'Course removed' });
   } catch (error) {
     console.error(error);
