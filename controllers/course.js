@@ -52,7 +52,6 @@ export const getCourses = async (req, res) => {
   }
 };
 
-
 // @desc    Get a single course
 // @route   GET /api/courses/:id
 // @access  Public
