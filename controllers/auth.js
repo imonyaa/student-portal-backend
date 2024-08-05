@@ -47,7 +47,6 @@ export const register = async (req, res) => {
       major,
       group,
       profileImage,
-      s,
     });
 
     if (user) {
