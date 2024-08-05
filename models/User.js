@@ -2,6 +2,11 @@ import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
 const UserSchema = new mongoose.Schema({
+  userID: {
+    type: String,
+    required: true,
+    unique: true,
+  },
   firstName: {
     type: String,
     required: true,
@@ -19,9 +24,6 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  phoneNumber: {
-    type: String,
-  },
   role: {
     type: String,
     enum: ["student", "teacher"],
@@ -29,7 +31,7 @@ const UserSchema = new mongoose.Schema({
   },
   academicLevel: {
     type: String,
-    enum: ["bachelor", "master"],
+    enum: ["Licence", "Master"],
     required: function () {
       return this.role === "student";
     },
@@ -42,7 +44,7 @@ const UserSchema = new mongoose.Schema({
   },
   major: {
     type: String,
-    enum: ["control", "computer", "power", "telecom"],
+    enum: ["Control", "Computer Engineering", "Power", "Telecommunications"],
     required: function () {
       return this.role === "student" && this.academicLevel === "master";
     },
@@ -52,6 +54,11 @@ const UserSchema = new mongoose.Schema({
     required: function () {
       return this.role === "student";
     },
+  },
+  profileImage: {
+    type: String,
+    default:
+      "https://as2.ftcdn.net/v2/jpg/04/10/43/77/1000_F_410437733_hdq4Q3QOH9uwh0mcqAhRFzOKfrCR24Ta.jpg",
   },
 });
 
