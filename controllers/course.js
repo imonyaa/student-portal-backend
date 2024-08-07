@@ -183,3 +183,41 @@ export const uploadFile = async (req, res) => {
       res.status(500).json({ message: 'Server error' });
     }
   };
+
+
+
+// @desc    Get students for a specific course
+// @route   GET /api/courses/:id/students
+// @access  Private (Teacher)
+export const getCourseStudents = async (req, res) => {
+  try {
+    // Find the course by ID
+    const course = await Course.findById(req.params.id);
+
+    // Check if the course exists
+    if (!course) {
+      return res.status(404).json({ message: 'Course not found' });
+    }
+
+    // Check if the requesting user is the teacher of the course
+    if (course.teacher.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: 'Access denied' });
+    }
+
+    // Find students who match the course's criteria
+    const students = await User.find({
+      role: 'student',
+      academicLevel: course.academicLevel,
+      academicYear: course.academicYear,
+      major: course.major
+    }).select('firstName lastName email group profileImage');
+
+    // Return the list of students
+    res.json(students);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+
