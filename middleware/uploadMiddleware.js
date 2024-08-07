@@ -31,4 +31,26 @@ const upload = multer({
   fileFilter: fileFilter,
 });
 
+// File filter for image uploads
+const imageFileFilter = (req, file, cb) => {
+  const fileTypes = /jpeg|jpg|png|gif/;
+  const extname = fileTypes.test(path.extname(file.originalname).toLowerCase());
+  const mimetype = fileTypes.test(file.mimetype);
+
+  if (extname && mimetype) {
+    return cb(null, true);
+  } else {
+    cb('Error: Only image files are allowed (jpeg, jpg, png, gif)');
+  }
+};
+
+// Multer upload configuration
+const uploadProfileImage = multer({
+  storage: storage,
+  limits: { fileSize: 1024 * 1024 * 5 }, // 5MB limit for profile images
+  fileFilter: imageFileFilter,
+});
+
+export { upload, uploadProfileImage };
+
 export default upload;
