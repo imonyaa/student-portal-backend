@@ -13,11 +13,11 @@ const CourseSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
-  academicLevel: { type: String, enum: ["bachelor", "master"], required: true },
+  academicLevel: { type: String, enum: ["Licence", "master"], required: true },
   academicYear: { type: Number, required: true },
   major: {
     type: String,
-    enum: ["control", "computer", "power", "telecom"],
+    enum: ["Control", "Computer Engineering", "Power", "Telecommunications"],
     required: false,
   },
   materials: [
