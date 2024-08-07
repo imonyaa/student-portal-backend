@@ -43,11 +43,16 @@ const CourseSchema = new mongoose.Schema({
       },
     },
   ],
-  created_at: {
-    type: Date,
-    default: Date.now,
-  },
-});
+  students: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+},
+{
+  timestamps: true,
+},);
 
 const Course = mongoose.model("Course", CourseSchema);
 
