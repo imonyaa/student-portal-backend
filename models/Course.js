@@ -1,29 +1,5 @@
 import mongoose from "mongoose";
-
-import {
-  course0,
-  course1,
-  course2,
-  course3,
-  course4,
-  course5,
-  course6,
-  course7,
-} from "../assets/images";
-
-const randomImagePicker = () => {
-  const images = [
-    course0,
-    course1,
-    course2,
-    course3,
-    course4,
-    course5,
-    course6,
-    course7,
-  ];
-  return images[Math.floor(Math.random() * images.length)];
-};
+import course0 from "../assets/images/course0.png";
 
 const CourseSchema = new mongoose.Schema({
   title: {
@@ -35,7 +11,7 @@ const CourseSchema = new mongoose.Schema({
   },
   image: {
     type: String,
-    default: "course0.png",
+    default: "course0",
   },
   teacher: {
     type: mongoose.Schema.Types.ObjectId,
