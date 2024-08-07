@@ -32,6 +32,10 @@ const CourseSchema = new mongoose.Schema({
       fileName: String,
       fileType: String,
       description: String,
+      created_at: {
+        type: Date,
+        default: Date.now,
+      },
     },
   ],
   created_at: {
