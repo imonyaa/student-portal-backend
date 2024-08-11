@@ -61,22 +61,28 @@ export const createCourse = async (req, res) => {
 // @access  Public
 export const getCourses = async (req, res) => {
   try {
-    if (req.user && req.user.role === 'teacher') {
+    if (req.user && req.user.role === "teacher") {
       // For teachers, find courses where the teacher ID matches the logged-in user
-      const courses = await Course.find({ teacher: req.user._id }).populate('teacher', 'firstName lastName');
-      console.log('Courses:', req.user._id);
+      const courses = await Course.find({ teacher: req.user._id }).populate(
+        "teacher",
+        "firstName lastName"
+      );
+      console.log("Courses:", req.user._id);
       return res.json(courses);
-    } else if (req.user && req.user.role === 'student') {
+    } else if (req.user && req.user.role === "student") {
       // For students, find courses based on academicLevel, academicYear, and major
-      const courses = await Course.find({ 
-        academicLevel: req.user.academicLevel, 
-        academicYear: req.user.academicYear, 
-        major: req.user.major 
-      }).populate('teacher', 'firstName lastName');
+      const courses = await Course.find({
+        academicLevel: req.user.academicLevel,
+        academicYear: req.user.academicYear,
+        major: req.user.major,
+      }).populate("teacher", "firstName lastName");
       return res.json(courses);
     } else {
       // If the user is not logged in, return all courses (or handle differently if needed)
-      const courses = await Course.find().populate('teacher', 'firstName lastName');
+      const courses = await Course.find().populate(
+        "teacher",
+        "firstName lastName"
+      );
       return res.json(courses);
     }
   } catch (error) {
@@ -92,7 +98,7 @@ export const getCourse = async (req, res) => {
   try {
     const course = await Course.findById(req.params.id).populate(
       "teacher",
-      "firstName lastName"
+      "firstName lastName profileImage"
     );
 
     if (!course) {

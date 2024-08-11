@@ -1,3 +1,4 @@
 {
-  "workbench.colorTheme": "Ramuda"
+  "workbench.colorTheme": "Ramuda",
+  "javascript.format.enable": true
 }
