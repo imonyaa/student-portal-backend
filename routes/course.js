@@ -1,5 +1,5 @@
 import express from 'express';
-import { createCourse, getCourses, getCourse, updateCourse, deleteCourse, uploadFile, getCourseStudents} from '../controllers/course.js';
+import { createCourse, getCourses, getCourse, updateCourse, deleteCourse, uploadFile, getCourseStudents, markFileCompletion, getFileById} from '../controllers/course.js';
 import { protect } from '../middleware/authMiddleware.js';
 import upload from '../middleware/uploadMiddleware.js';
 
@@ -10,5 +10,7 @@ router.route('/').post(protect, createCourse).get(protect, getCourses);
 router.route('/:id').get(protect,getCourse).put(protect, updateCourse).delete(protect, deleteCourse);
 router.route('/:id/upload').post(protect, upload.single('file'), uploadFile);
 router.get('/:id/students', protect, getCourseStudents);
+router.get('/:courseId/files/:fileId', protect, getFileById);
+router.put('/:courseId/files/:fileId/mark-completion', protect, markFileCompletion);
 
 export default router;

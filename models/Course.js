@@ -36,6 +36,22 @@ const CourseSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
       },
+      completionStatus: [
+        {
+          student: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+          },
+          completed: {
+            type: Boolean,
+            default: false,
+          },
+          markedAt: {
+            type: Date,
+            default: Date.now,
+          },
+        },
+      ],
     },
   ],
   students: [
