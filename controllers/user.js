@@ -43,7 +43,7 @@ export const getMe = async (req, res) => {
 // @route   PUT /api/users/me/update
 // @access  Private
 export const updateUserProfile = async (req, res) => {
-  const { name, email, currentPassword, newPassword } = req.body;
+  const { email, currentPassword, newPassword } = req.body;
 
   try {
     const user = await User.findById(req.user.id);
@@ -70,7 +70,6 @@ export const updateUserProfile = async (req, res) => {
     }
 
     // Update fields if they are provided
-    if (name) user.name = name;
     if (email) user.email = email;
 
     // Handle profile image update
