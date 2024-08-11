@@ -1,28 +1,6 @@
 import Course from "../models/Course.js";
 import path from "path";
 import User from "../models/User.js";
-import course0 from "../assets/images/course0.png";
-import course1 from "../assets/images/course1.png";
-import course2 from "../assets/images/course2.png";
-import course3 from "../assets/images/course3.png";
-import course4 from "../assets/images/course4.png";
-import course5 from "../assets/images/course5.png";
-import course6 from "../assets/images/course6.png";
-import course7 from "../assets/images/course7.png";
-
-const randomImagePicker = () => {
-  const images = [
-    course0,
-    course1,
-    course2,
-    course3,
-    course4,
-    course5,
-    course6,
-    course7,
-  ];
-  return images[Math.floor(Math.random() * images.length)];
-};
 
 // @desc    Create a new course
 // @route   POST /api/courses
@@ -41,7 +19,6 @@ export const createCourse = async (req, res) => {
     const course = await Course.create({
       title,
       description,
-      image: randomImagePicker(),
       teacher: req.user._id,
       academicLevel,
       academicYear,
