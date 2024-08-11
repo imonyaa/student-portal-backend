@@ -48,11 +48,11 @@ export const getCourses = async (req, res) => {
         academicLevel: req.user.academicLevel, 
         academicYear: req.user.academicYear, 
         major: req.user.major 
-      }).populate('teacher', 'firstName lastName');
+      }).populate('teacher', 'firstName lastName profileImage');
       return res.json(courses);
     } else {
       // If the user is not logged in, return all courses (or handle differently if needed)
-      const courses = await Course.find().populate('teacher', 'firstName lastName');
+      const courses = await Course.find().populate('teacher', 'firstName lastName profileImage');
       return res.json(courses);
     }
   } catch (error) {
@@ -66,7 +66,7 @@ export const getCourses = async (req, res) => {
 // @access  Public
 export const getCourse = async (req, res) => {
   try {
-    const course = await Course.findById(req.params.id).populate('teacher', 'firstName lastName');
+    const course = await Course.findById(req.params.id).populate('teacher', 'firstName lastName profileImage');
 
     if (!course) {
       return res.status(404).json({ message: 'Course not found' });
