@@ -7,6 +7,7 @@ import courseRoutes from './routes/course.js';
 import usersRoutes from './routes/user.js';
 import announcementRoutes from './routes/announcement.js';
 import cors from 'cors';
+import assignmentRoutes from './routes/assignment.js';
 
 // Load environment variables
 dotenv.config();
@@ -35,6 +36,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/courses', courseRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api/announcements', announcementRoutes);
+app.use('/api/assignments', assignmentRoutes);
 
 // Define port
 const PORT = process.env.PORT || 5000;

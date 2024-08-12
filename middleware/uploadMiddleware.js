@@ -51,6 +51,43 @@ const uploadProfileImage = multer({
   fileFilter: imageFileFilter,
 });
 
-export { upload, uploadProfileImage };
+
+// assignment file upload
+const assignmentStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    // Store assignments and submissions in separate folders
+    const isTeacher = req.user && req.user.role === 'teacher';
+    const folder = isTeacher ? './uploads/assignments' : './uploads/submissions';
+    cb(null, folder);
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = `${Date.now()}-${crypto.randomBytes(6).toString('hex')}`;
+    cb(null, `${uniqueSuffix}-${file.originalname}`);
+  },
+});
+
+// File filter for assignments and submissions
+const assignmentFileFilter = (req, file, cb) => {
+  // Allow typical document formats, images, and zip files
+  const fileTypes = /pdf|doc|docx|ppt|pptx|xls|xlsx|txt|zip|jpeg|jpg|png|gif|mp4|avi|mov/;
+  const extname = fileTypes.test(path.extname(file.originalname).toLowerCase());
+  const mimetype = fileTypes.test(file.mimetype);
+
+  if (extname && mimetype) {
+    return cb(null, true);
+  } else {
+    cb('Error: Unsupported file type for assignments or submissions');
+  }
+};
+
+// Multer upload configuration for assignments and submissions
+const uploadAssignment = multer({
+  storage: assignmentStorage,
+  limits: { fileSize: 1024 * 1024 * 100 }, // 100MB limit for assignments and submissions
+  fileFilter: assignmentFileFilter,
+});
+
+
+export { upload, uploadProfileImage, uploadAssignment };
 
 export default upload;
