@@ -54,12 +54,10 @@ const CourseSchema = new mongoose.Schema({
       ],
     },
   ],
-  students: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
-  ],
+  announcements: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Announcement',
+  }],
 },
 {
   timestamps: true,
