@@ -31,6 +31,7 @@ export const getMe = async (req, res) => {
       academicYear: user.academicYear,
       major: user.major,
       group: user.group,
+      userID: user.userID,
       profileImage: user.profileImage,
     });
   } catch (error) {
