@@ -56,8 +56,12 @@ export const getCourseAnnouncements = async (req, res) => {
       req.user.academicLevel === course.academicLevel &&
       req.user.academicYear === course.academicYear;
 
-    // If the user is not an enrolled student, deny access
-    if (!isEnrolledStudent) {
+
+     const isCourseTeacher = course.teacher !== req.user._id;
+
+
+    // If the user is not an enrolled student, nor the course teacher, deny access
+    if (!isEnrolledStudent && !isCourseTeacher) {
       return res.status(403).json({ message: "Access denied" });
     }
 

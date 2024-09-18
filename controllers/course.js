@@ -168,8 +168,10 @@ export const uploadFile = async (req, res) => {
       }
   
       // File details
+      // added lecture name because it shouldn't be the same as the filename
       const file = {
         fileName: req.file.filename,
+        lectureName: req.body.lectureName,
         fileType: req.file.mimetype,
         description: req.body.description,
       };
@@ -249,6 +251,62 @@ export const getFileById = async (req, res) => {
   }
 };
 
+// in order to send the file itself
+export const getFileContentById = async (req, res) => {
+  try {
+    // Find the course by ID
+    const course = await Course.findById(req.params.courseId);
+
+    // Check if the course exists
+    if (!course) {
+      return res.status(404).json({ message: 'Course not found' });
+    }
+
+    // Find the file within the course by fileId
+    const file = course.files.id(req.params.fileId);
+
+    // Check if the file exists
+    if (!file) {
+      return res.status(404).json({ message: 'File not found' });
+    }
+  
+  // Return the file content as a response
+    const filePath = `C://Programu 2/Web Dev/backend/uploads/${file.filename}`;
+    res.sendFile(filePath);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error'});
+  }
+};
+
+export const deleteFileById = async (req, res) => {
+  try {
+    // Find the course by ID
+    const course = await Course.findById(req.params.courseId);
+
+    // Check if the course exists
+    if (!course) {
+      return res.status(404).json({ message: 'Course not found' });
+    }
+
+    // Find the file within the course by fileId
+    const file = course.files.id(req.params.fileId);
+
+    // Check if the file exists
+    if (!file) {
+      return res.status(404).json({ message: 'File not found' });
+    }
+
+    // Remove the file from the course
+    course.files.id(req.params.fileId).deleteOne();
+    await course.save();
+
+    res.status(200).json({ message: 'File deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
 
 // @desc    Mark a file as complete or incomplete
 // @route   PUT /api/courses/:courseId/files/:fileId/mark-completion

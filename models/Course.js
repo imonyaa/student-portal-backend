@@ -17,7 +17,7 @@ const CourseSchema = new mongoose.Schema({
   academicYear: { type: Number, required: true },
   major: {
     type: String,
-    enum: ["Control", "Computer Engineering", "Power", "Telecommunications"],
+    enum: ["Control", "Computer Engineering", "Power", "Telecommunications", ""],
     required: false,
   },
   materials: [
@@ -29,6 +29,7 @@ const CourseSchema = new mongoose.Schema({
   ],
   files: [
     {
+      lectureName: String,
       fileName: String,
       fileType: String,
       description: String,
