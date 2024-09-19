@@ -170,7 +170,7 @@ export const uploadFile = async (req, res) => {
       // File details
       // added lecture name because it shouldn't be the same as the filename
       const file = {
-        fileName: req.file.filename,
+        filename: req.file.filename,
         lectureName: req.body.lectureName,
         fileType: req.file.mimetype,
         description: req.body.description,

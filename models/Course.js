@@ -30,7 +30,7 @@ const CourseSchema = new mongoose.Schema({
   files: [
     {
       lectureName: String,
-      fileName: String,
+      filename: String,
       fileType: String,
       description: String,
       created_at: {
