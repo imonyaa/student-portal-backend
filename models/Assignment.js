@@ -21,7 +21,7 @@ const assignmentSchema = new mongoose.Schema({
     ref: 'Course',
     required: true,
   },
-  createdAt: {
+  created_at: {
     type: Date,
     default: Date.now,
   },
