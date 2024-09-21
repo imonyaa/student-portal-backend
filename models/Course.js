@@ -13,11 +13,11 @@ const CourseSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
-  academicLevel: { type: String, enum: ["Licence", "master"], required: true },
+  academicLevel: { type: String, enum: ["Licence", "Master"], required: true },
   academicYear: { type: Number, required: true },
   major: {
     type: String,
-    enum: ["Control", "Computer Engineering", "Power", "Telecommunications"],
+    enum: ["Control", "Computer Engineering", "Power", "Telecommunications", ""],
     required: false,
   },
   materials: [
@@ -29,7 +29,8 @@ const CourseSchema = new mongoose.Schema({
   ],
   files: [
     {
-      fileName: String,
+      lectureName: String,
+      filename: String,
       fileType: String,
       description: String,
       created_at: {

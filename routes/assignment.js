@@ -30,4 +30,7 @@ router.put('/submissions/:submissionId/grade', protect, gradeSubmission);
 // Get a student's submission for an assignment
 router.get('/:assignmentId/submissions/:studentId', protect, getStudentSubmission);
 
+// Get a student's grade on a submission for an assignment (or in array for all his marks)
+// delete an assignment (by teacher)
+
 export default router;

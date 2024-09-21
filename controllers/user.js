@@ -1,4 +1,5 @@
 import User from "../models/User.js";
+import bcrypt from "bcrypt";
 
 // get all users
 export const getUsers = async (req, res) => {
@@ -31,6 +32,7 @@ export const getMe = async (req, res) => {
       academicYear: user.academicYear,
       major: user.major,
       group: user.group,
+      userID: user.userID,
       profileImage: user.profileImage,
     });
   } catch (error) {

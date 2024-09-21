@@ -46,7 +46,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     enum: ["Control", "Computer Engineering", "Power", "Telecommunications"],
     required: function () {
-      return this.role === "student" && this.academicLevel === "master";
+      return this.role === "student" && this.academicLevel === "Master";
     },
   },
   group: {
