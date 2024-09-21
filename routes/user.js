@@ -7,6 +7,6 @@ const router = express.Router();
 
 router.route('/').get(getUsers);
 router.route('/me').get(protect, getMe);
-router.put('/me/update', protect, uploadMiddleware.single('profileImage'), updateUserProfile);
+router.route('/me').put(protect, uploadMiddleware.single('profileImage'), updateUserProfile);
 
 export default router;

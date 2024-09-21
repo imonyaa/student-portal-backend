@@ -1,4 +1,5 @@
 import User from "../models/User.js";
+import bcrypt from "bcryptjs";
 
 // get all users
 export const getUsers = async (req, res) => {
@@ -44,29 +45,41 @@ export const getMe = async (req, res) => {
 // @access  Private
 export const updateUserProfile = async (req, res) => {
   const { email, currentPassword, newPassword } = req.body;
+  console.log(req.body);
 
   try {
     const user = await User.findById(req.user.id);
 
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: "User not found" });
     }
 
     // Verify current password if newPassword is provided
     if (newPassword) {
+      console.log(currentPassword);
+
       if (!currentPassword) {
-        return res.status(400).json({ message: 'Current password is required to change password' });
+        return res
+          .status(400)
+          .json({ message: "Current password is required to change password" });
       }
 
       const isMatch = await bcrypt.compare(currentPassword, user.password);
 
       if (!isMatch) {
-        return res.status(400).json({ message: 'Current password is incorrect' });
+        return res.status(400).json({ message: "Invalid password" });
       }
 
       // Hash new password
-      const salt = await bcrypt.genSalt(10);
-      user.password = await bcrypt.hash(newPassword, salt);
+      // const salt = await bcrypt.genSalt(10);
+      // user.password = await bcrypt.hash(newPassword, salt);
+      user.password = newPassword;
+      console.log(user);
+
+      await user.save();
+
+      return res.status(200).json({ message: "Password updated successfully" });
+      
     }
 
     // Update fields if they are provided
@@ -77,14 +90,17 @@ export const updateUserProfile = async (req, res) => {
       user.profileImage = `/uploads/${req.file.filename}`;
     }
 
+    console.log(user);
+
     const updatedUser = await user.save();
+    console.log(updatedUser);
 
     res.status(200).json({
-      message: 'Profile updated successfully',
+      message: "Profile updated successfully",
       user: updatedUser,
     });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: "Server error" });
   }
 };
