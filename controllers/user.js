@@ -56,7 +56,7 @@ export const updateUserProfile = async (req, res) => {
     }
 
     // Verify current password if newPassword is provided
-    if (newPassword) {
+    
       console.log(currentPassword);
 
       if (!currentPassword) {
@@ -74,16 +74,10 @@ export const updateUserProfile = async (req, res) => {
       // Hash new password
       // const salt = await bcrypt.genSalt(10);
       // user.password = await bcrypt.hash(newPassword, salt);
-      user.password = newPassword;
-      user.email = email;
-      
-      console.log(user);
-
-      await user.save();
-
-      return res.status(200).json({ message: "Password updated successfully" });
-      
-    }
+      if (newPassword) {
+        user.password = newPassword;
+        console.log(user);
+      }
 
     // Update fields if they are provided
     if (email) user.email = email;
