@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+   "build": "echo "No build process needed for this project"",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
