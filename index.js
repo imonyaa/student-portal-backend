@@ -23,7 +23,7 @@ app.use(express.json()); // For parsing JSON request bodies
 app.use(cookieParser()); // For parsing cookies
 app.use(cors(
   {
-    origin: 'https://imonyaa.github.io/Student-Portal/',
+    origin: '*',
     credentials: true,
   }
 ));
