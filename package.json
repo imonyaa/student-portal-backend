@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "echo 'Building...'",
+    "build": "npm install",
     "start": "node index.js"
   },
   "repository": {
