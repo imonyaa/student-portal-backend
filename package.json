@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "echo `No build process needed for this project`",
+    "build": "echo 'Building...'",
     "start": "node index.js"
   },
   "repository": {
