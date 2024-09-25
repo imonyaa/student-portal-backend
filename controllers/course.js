@@ -271,7 +271,7 @@ export const getFileContentById = async (req, res) => {
     }
   
   // Return the file content as a response
-    const filePath = `./uploads/${file.filename}`;
+    const filePath = `../uploads/${file.filename}`;
     res.sendFile(filePath);
   } catch (error) {
     console.error(error);
