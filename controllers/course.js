@@ -1,6 +1,12 @@
 import Course from '../models/Course.js';
-const path = require('path');
+import path from 'path';
+import { fileURLToPath } from 'url';
 import User from '../models/User.js';
+
+// Convert import.meta.url to the current directory
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 
 // @desc    Create a new course
 // @route   POST /api/courses
@@ -269,9 +275,9 @@ export const getFileContentById = async (req, res) => {
     if (!file) {
       return res.status(404).json({ message: 'File not found' });
     }
-  
+    
   // Return the file content as a response
-    // const filePath = `../uploads/${file.filename}`;
+    //const filePath = `../uploads/${file.filename}`;
     res.sendFile(__dirname, 'uploads', file.filename);
   } catch (error) {
     console.error(error);
