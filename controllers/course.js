@@ -1,11 +1,7 @@
 import Course from '../models/Course.js';
 import path from 'path';
-import { fileURLToPath } from 'url';
 import User from '../models/User.js';
 
-// Convert import.meta.url to the current directory
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 
 // @desc    Create a new course
