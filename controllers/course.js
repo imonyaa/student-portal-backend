@@ -279,7 +279,7 @@ export const getFileContentById = async (req, res) => {
   // Return the file content as a response
     const filePath = path.join(__dirname, 'uploads');
 
-    res.sendFile(filepath, file.filename);
+    res.sendFile(filePath, file.filename);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error'});
