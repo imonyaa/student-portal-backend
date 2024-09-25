@@ -277,22 +277,9 @@ export const getFileContentById = async (req, res) => {
     }
     
   // Return the file content as a response
-  var options = {
-    root: path.join(__dirname, 'uploads'),
-    dotfiles: 'deny',
-    headers: {
-      'x-timestamp': Date.now(),
-      'x-sent': true
-    }
-  }
+    const filePath = path.join(__dirname, 'uploads');
 
-    res.sendFile(file.filename, options, function (err) {
-      if (err) {
-        next(err)
-      } else {
-        console.log('Sent:', fileName)
-      }
-    });
+    res.sendFile(filepath, file.filename);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error'});
