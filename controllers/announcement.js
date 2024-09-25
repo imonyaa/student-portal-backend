@@ -43,7 +43,7 @@ export const getCourseAnnouncements = async (req, res) => {
       path: "announcements",
       populate: {
         path: "teacher",
-        select: "firstName lastName",
+        select: "firstName lastName profileImage",
       },
     });
 

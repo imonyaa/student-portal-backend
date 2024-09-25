@@ -23,7 +23,7 @@ app.use(express.json()); // For parsing JSON request bodies
 app.use(cookieParser()); // For parsing cookies
 app.use(cors(
   {
-    origin: 'http://localhost:3000',
+    origin: '*',
     credentials: true,
   }
 ));
