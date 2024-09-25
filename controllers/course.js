@@ -1,7 +1,11 @@
 import Course from '../models/Course.js';
 import path from 'path';
+import { fileURLToPath } from 'url';
 import User from '../models/User.js';
 
+// Convert import.meta.url to the current directory
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 
 // @desc    Create a new course
@@ -273,9 +277,9 @@ export const getFileContentById = async (req, res) => {
     }
     
   // Return the file content as a response
-    const filePath = path.join('/opt/render/project/src', 'uploads');
+    const filePath = path.join('/opt/render/project/src/uploads', 'uploads', file.filename);
 
-    res.sendFile(filePath, file.filename);
+    res.sendFile(filePath);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error'});
