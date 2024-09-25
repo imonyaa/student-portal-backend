@@ -1,5 +1,5 @@
 import Course from '../models/Course.js';
-import path from 'path';
+const path = require('path');
 import User from '../models/User.js';
 
 // @desc    Create a new course
